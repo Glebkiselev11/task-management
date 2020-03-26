@@ -1,0 +1,14 @@
+PostgreSQL:
+  restart: always
+  image: sameersbn/postgresql:10-2
+  ports:
+    - "5432:5432"
+  environment:
+    - DEBUG=false
+
+    - DB_USER=postgres
+    - DB_PASS=12345678
+    - DB_NAME=task-management
+
+  volumes:
+    - /srv/docker/postgresql:/var/lib/postgresql
