@@ -8,10 +8,15 @@ import { User } from "src/auth/user.entity";
 @EntityRepository(Task)
 export class TaskRepository extends Repository<Task> {
 
-  async getTasks(filterDto: GetTasksFilterDto): Promise<Task[]> {
+  async getTasks(
+    filterDto: GetTasksFilterDto,
+    user: User,
+  ): Promise<Task[]> {
     const { status, search } = filterDto;
     // createQueryBuilder - это метод из typeorm (мы его наследовали)
     const query = this.createQueryBuilder('task');
+
+    query.where('task.userId = :userId', { userId: user.id });
 
     if (status) {
       query.andWhere('task.status = :status', { status });
